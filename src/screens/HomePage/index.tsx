@@ -9,12 +9,13 @@ import { StatusBar } from 'expo-status-bar';
 import { PageHeader } from '@components/PageHeader';
 import { useRepositories } from '@hooks/repositories.hooks';
 
+import logoPNG from "@assets/background-logo.png";
 
 export function HomePage() {
   const { repositories } = useRepositories();
 
   return (
-    <S.Container>
+    <S.Container source={logoPNG} resizeMode='center'>
       <StatusBar
         translucent
         style='dark'

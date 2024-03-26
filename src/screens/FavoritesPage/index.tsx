@@ -14,10 +14,10 @@ export function FavoritesPage() {
       <PageHeader />
 
       <FlatList
-        keyExtractor={item => String(item.id)}
+        keyExtractor={item => `${item.id}-favorite`}
         data={favorites}
         renderItem={({ item }) => (
-          <GitCard item={item} />
+          <GitCard item={item} showFavorite={false} />
         )}
         ItemSeparatorComponent={() => <S.Divider />}
         showsVerticalScrollIndicator={false}

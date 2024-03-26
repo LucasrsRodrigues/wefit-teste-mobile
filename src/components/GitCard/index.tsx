@@ -6,6 +6,7 @@ import { useTheme } from 'styled-components/native';
 import { Entypo } from '@expo/vector-icons';
 import { splitFullName } from '@utils/index';
 import { useRepositories } from '@hooks/repositories.hooks';
+import { useNavigation } from '@react-navigation/native';
 
 interface IReposProps {
   id: number;
@@ -21,17 +22,18 @@ interface IReposProps {
 
 interface IGitCardProps {
   item: IReposProps;
+  showFavorite?: boolean;
 }
 
 
-export function GitCard({ item }: IGitCardProps) {
+export function GitCard({ item, showFavorite = true }: IGitCardProps) {
   const theme = useTheme();
+  const { navigate } = useNavigation();
   const { addFavoriteRepository } = useRepositories();
 
   return (
-    <S.GitCard>
+    <S.GitCard onPress={() => navigate("DetailsScreen", { item })}>
       <S.GitCardHeader>
-
         <S.GitCardHeaderName>
           <Text>
             {splitFullName(item.full_name)[0]}
@@ -54,15 +56,19 @@ export function GitCard({ item }: IGitCardProps) {
       </S.GitCardBody>
 
       <S.GitCardFooter>
-        <S.FavouriteButton
-          onPress={() => addFavoriteRepository(item)}
-        >
-          <Entypo name="star" size={20} color={theme.colors.primary} />
 
-          <Text color={theme.colors.primary} variant='bold'>
-            Favoritar
-          </Text>
-        </S.FavouriteButton>
+        {showFavorite ? (
+          <S.FavouriteButton
+            onPress={() => addFavoriteRepository(item)}
+          >
+            <Entypo name="star" size={20} color={theme.colors.primary} />
+
+            <Text color={theme.colors.primary} variant='bold'>
+              Favoritar
+            </Text>
+          </S.FavouriteButton>
+        ) : null}
+
 
         <S.StarsCount>
           <Entypo

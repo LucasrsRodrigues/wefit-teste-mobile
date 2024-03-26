@@ -8,9 +8,24 @@ interface ITextProps extends TextProps, IRNTextProps {
   fontSize?: number;
 }
 
-export function Text({ children, variant = "regular", type = "primary", fontSize = 12, color = "#000000", ...rest }: ITextProps) {
+export function Text({
+  children,
+  variant = "regular",
+  type = "primary",
+  fontSize = 12,
+  color = "#000000",
+  textTransform = "none",
+  ...rest
+}: ITextProps) {
   return (
-    <S.RNText variant={variant} type={type} fontSize={fontSize} color={color} {...rest}>
+    <S.RNText
+      variant={variant}
+      type={type}
+      fontSize={fontSize}
+      color={color}
+      textTransform={textTransform}
+      {...rest}
+    >
       {children}
     </S.RNText>
   );

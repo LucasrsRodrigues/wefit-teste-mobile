@@ -1,10 +1,12 @@
+import { UserSelectionModal } from "@components/UserSelectionModal";
 import RepoHttpService from "@infrastructure/service/RepoHttpService";
-import { useAsyncStorage } from "@react-native-async-storage/async-storage";
-import React, { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import AsyncStorage, { useAsyncStorage } from "@react-native-async-storage/async-storage";
+import { deleteDuplicates } from "@utils/index";
+import React, { createContext, ReactNode, useCallback, useContext, useEffect, useState } from "react";
 
-type IRepository = {
+export type IRepository = {
   id: number;
-  name: string;
+  full_name: string;
   description?: string;
   owner: {
     avatar_url: string;
@@ -19,6 +21,7 @@ interface IRepositoriesContextProps {
   repositories: IRepository[];
   addFavoriteRepository: (repository: IRepository) => Promise<void>;
   favorites: IRepository[];
+  handleOpenModal(): void;
 }
 
 interface IRepositoriesProviderProps {
@@ -32,15 +35,18 @@ function RepositoriesProvider({ children }: IRepositoriesProviderProps) {
   const [repositories, setRepos] = useState<Array<IRepository>>([]);
   const [favorites, setFavorites] = useState<IRepository[]>([]);
   const { getItem, setItem } = useAsyncStorage('@github:repos');
+  const [ownerName, setOwnerName] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
   async function addFavoriteRepository(repository: IRepository) {
     try {
       const existingFavorites = await getItem();
       const previousRepository = existingFavorites ? JSON.parse(existingFavorites) : [];
 
-      const repositoryAlreadyExists = previousRepository.filter((item: IRepository) => item.id !== repository.id);
+      const repositoryAlreadyExists = previousRepository.filter((item: IRepository) => item.id === repository.id);
 
-      if (!!repositoryAlreadyExists) {
+
+      if (!!repositoryAlreadyExists[0] === false) {
         const data = [...previousRepository, repository];
 
         setFavorites(data);
@@ -49,36 +55,70 @@ function RepositoriesProvider({ children }: IRepositoriesProviderProps) {
 
         setRepos(prev => prev.filter(item => item.id !== repository.id));
       }
-
-      console.log("----addFavoriteRepository");
-      console.log(repository)
-      console.log("----addFavoriteRepository");
     } catch (error) {
       alert(error);
     }
   }
 
+  async function getFavorites() {
+    try {
+      const existingFavorites = await getItem();
+      const favoritesRepository = existingFavorites ? JSON.parse(existingFavorites) : [];
+
+      setFavorites(favoritesRepository)
+
+    } catch (error) {
+      alert(error);
+    }
+  }
+
+  const getRepositories = useCallback(async () => {
+    try {
+      if (ownerName === "") {
+        return;
+      }
+
+      const response = await RepoHttpService.get(ownerName);
+
+      const item = deleteDuplicates(response.data, favorites, "full_name");
+
+      setRepos(item);
+    } catch (error) {
+      alert(error);
+    }
+  }, [favorites, ownerName]);
+
+  function submitModal(newOwnerName: string) {
+    setOwnerName(newOwnerName);
+  }
+
+  function handleOpenModal() {
+    setShowModal(true);
+  }
+
   useEffect(() => {
     (async () => {
-      try {
-        const response = await RepoHttpService.get("appswefit");
-
-        setRepos(response.data);
-      } catch (error) {
-        alert(error)
-      }
+      await getFavorites();
+      await getRepositories();
     })();
-  }, []);
+  }, [ownerName]);
 
   return (
     <RepositoriesContext.Provider
       value={{
         repositories,
         addFavoriteRepository,
-        favorites
+        favorites,
+        handleOpenModal
       }}
     >
       {children}
+
+      <UserSelectionModal
+        visible={showModal}
+        onClose={() => setShowModal(false)}
+        submitModal={submitModal}
+      />
     </RepositoriesContext.Provider>
   )
 }

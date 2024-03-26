@@ -8,7 +8,9 @@ export default {
     paragraph: "#9A9A9A",
     line: "#DADADA",
     menuActive: "#1976D2",
-    menuInactive: "#00000060"
+    menuInactive: "#00000060",
+    dark: "#000000",
+    white: "#ffffff"
   },
   fonts: {
     primary: {
