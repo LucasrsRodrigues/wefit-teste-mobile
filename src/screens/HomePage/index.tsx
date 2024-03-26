@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import * as S from './styles';
-import { useTheme } from 'styled-components/native';
-import RepoHttpService from '@infrastructure/service/RepoHttpService';
 import { FlatList } from 'react-native';
 import { GitCard } from '@components/GitCard';
 import { StatusBar } from 'expo-status-bar';
