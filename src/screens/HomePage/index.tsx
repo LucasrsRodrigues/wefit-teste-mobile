@@ -5,38 +5,26 @@ import { useTheme } from 'styled-components/native';
 import RepoHttpService from '@infrastructure/service/RepoHttpService';
 import { FlatList } from 'react-native';
 import { GitCard } from '@components/GitCard';
+import { StatusBar } from 'expo-status-bar';
+import { PageHeader } from '@components/PageHeader';
+import { useRepositories } from '@hooks/repositories.hooks';
 
-interface IReposProps {
-  id: number;
-  full_name: string;
-  description?: string;
-  owner: {
-    avatar_url: string;
-  }
-  stargazers_count: number;
-  language: string;
-  html_url: string;
-}
 
 export function HomePage() {
-  const theme = useTheme();
-  const [repos, setRepos] = useState<Array<IReposProps>>([]);
-
-  useEffect(() => {
-    (async () => {
-      const response = await RepoHttpService.get("appswefit");
-
-      setRepos(response.data);
-    })();
-  }, []);
-
+  const { repositories } = useRepositories();
 
   return (
     <S.Container>
+      <StatusBar
+        translucent
+        style='dark'
+      />
+
+      <PageHeader />
 
       <FlatList
         keyExtractor={item => String(item.id)}
-        data={repos}
+        data={repositories}
         renderItem={({ item }) => (
           <GitCard item={item} />
         )}

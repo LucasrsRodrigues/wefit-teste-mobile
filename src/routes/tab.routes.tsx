@@ -2,16 +2,16 @@ import { BottomTabNavigationOptions, createBottomTabNavigator } from "@react-nav
 import { HomePage } from "@screens/HomePage";
 import { AntDesign, Entypo } from '@expo/vector-icons';
 import { useTheme } from "styled-components/native";
+import { FavoritesPage } from "@screens/FavoritesPage";
 
 const { Navigator, Screen } = createBottomTabNavigator();
-
 
 
 export function TabRoutes() {
   const theme = useTheme();
 
-
   const screensOptionsStyle: BottomTabNavigationOptions = {
+    headerShown: false,
     tabBarActiveTintColor: theme.colors.menuActive,
     tabBarInactiveTintColor: theme.colors.menuInactive,
     tabBarIconStyle: {
@@ -43,7 +43,7 @@ export function TabRoutes() {
 
       <Screen
         name="Favorites"
-        component={HomePage}
+        component={FavoritesPage}
         options={{
           tabBarLabel: "Favoritos",
           tabBarIcon: ({ color, focused, size }) => (

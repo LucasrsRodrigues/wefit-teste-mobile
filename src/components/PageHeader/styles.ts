@@ -1,14 +1,5 @@
+import { StatusBar } from "expo-status-bar";
 import styled from "styled-components/native";
-import { StatusBar } from 'expo-status-bar';
-
-export const Container = styled.View`
-  flex:1;
-`;
-
-
-export const Divider = styled.View`
-  height: 16px;
-`;
 
 export const PageHeader = styled.View`
   background: ${({ theme }) => theme.colors.card};

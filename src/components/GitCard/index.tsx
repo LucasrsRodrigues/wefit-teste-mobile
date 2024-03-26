@@ -5,6 +5,7 @@ import { Text } from '@components/base/Typography/Text';
 import { useTheme } from 'styled-components/native';
 import { Entypo } from '@expo/vector-icons';
 import { splitFullName } from '@utils/index';
+import { useRepositories } from '@hooks/repositories.hooks';
 
 interface IReposProps {
   id: number;
@@ -25,6 +26,7 @@ interface IGitCardProps {
 
 export function GitCard({ item }: IGitCardProps) {
   const theme = useTheme();
+  const { addFavoriteRepository } = useRepositories();
 
   return (
     <S.GitCard>
@@ -52,7 +54,9 @@ export function GitCard({ item }: IGitCardProps) {
       </S.GitCardBody>
 
       <S.GitCardFooter>
-        <S.FavouriteButton>
+        <S.FavouriteButton
+          onPress={() => addFavoriteRepository(item)}
+        >
           <Entypo name="star" size={20} color={theme.colors.primary} />
 
           <Text color={theme.colors.primary} variant='bold'>

@@ -10,6 +10,7 @@ import * as ExpoSplashScreen from 'expo-splash-screen';
 import { SplashScreen } from '@screens/SplashScreen';
 import { StackRouter } from '@react-navigation/native';
 import { Routes } from '@routes/index';
+import { RepositoriesProvider } from '@hooks/repositories.hooks';
 
 ExpoSplashScreen.preventAutoHideAsync();
 
@@ -34,9 +35,12 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <View style={styles.container} onLayout={onLayoutRootView}>
-        <Routes />
-      </View>
+      <RepositoriesProvider>
+
+        <View style={styles.container} onLayout={onLayoutRootView}>
+          <Routes />
+        </View>
+      </RepositoriesProvider>
     </ThemeProvider>
   );
 }
