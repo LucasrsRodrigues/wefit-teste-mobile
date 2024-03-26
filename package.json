@@ -10,8 +10,10 @@
   },
   "dependencies": {
     "@types/react": "~18.2.45",
+    "babel-plugin-module-resolver": "^5.0.0",
     "expo": "~50.0.14",
     "expo-status-bar": "~1.11.1",
+    "module-resolver": "^1.0.0",
     "react": "18.2.0",
     "react-native": "0.73.6",
     "styled-components": "^6.1.8",
