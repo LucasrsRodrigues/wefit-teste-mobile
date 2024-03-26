@@ -1,21 +1,37 @@
 import React, { useEffect } from 'react';
-
+import * as Linking from 'expo-linking';
 import * as S from './styles';
 import { Text } from '@components/base/Typography/Text';
 import { useTheme } from 'styled-components/native';
 import { StatusBar } from 'expo-status-bar';
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { IRepository } from '@hooks/repositories.hooks';
+import { IRepository, useRepositories } from '@hooks/repositories.hooks';
 import { splitFullName } from '@utils/index';
 import { Feather, Entypo } from '@expo/vector-icons';
 import { Button } from '@components/base/Button';
 
 export function DetailsScreen() {
   const theme = useTheme();
+  const { IsFavorite, addFavoriteRepository, removeFavoriteRepository } = useRepositories();
   const { params } = useRoute();
   const { goBack } = useNavigation();
   const repository = params?.item as IRepository;
+
+  const isFavorite = IsFavorite(repository.id);
+
+  function openExternalURL() {
+    Linking.openURL(repository.html_url);
+  }
+
+  function followOrUnfollowAction() {
+    if (isFavorite) {
+      removeFavoriteRepository(repository);
+      return;
+    }
+
+    addFavoriteRepository(repository);
+  }
 
   return (
     <S.Container>
@@ -67,14 +83,15 @@ export function DetailsScreen() {
         <Button
           tintColor={theme.colors.menuActive}
           label='Ver repositório'
+          onPress={openExternalURL}
           rightIcon={
             <Feather name="link-2" size={20} color={theme.colors.menuActive} />
           }
         />
 
         <Button
-          label='Favoritar'
-          backgroundColor={theme.colors.primary}
+          label={isFavorite ? "Desfavoritar" : 'Favoritar'}
+          backgroundColor={isFavorite ? "transparent" : theme.colors.primary}
           rightIcon={
             <Entypo
               name="star"
@@ -82,6 +99,9 @@ export function DetailsScreen() {
               color={theme.colors.dark}
             />
           }
+          onPress={followOrUnfollowAction}
+          showBorder={isFavorite}
+
         />
       </S.DetailsFooter>
     </S.Container>

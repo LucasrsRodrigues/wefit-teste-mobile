@@ -12,10 +12,11 @@ interface IButtonsProps extends TouchableOpacityProps, S.IButtonProps {
   tintColor?: string;
 }
 
-export function Button({ label, rightIcon, backgroundColor = "#00000000", tintColor = "#000000", ...rest }: IButtonsProps) {
+export function Button({ label, rightIcon, backgroundColor = "#00000000", showBorder = false, tintColor = "#000000", ...rest }: IButtonsProps) {
   return (
     <S.Button
       backgroundColor={backgroundColor}
+      showBorder={showBorder}
       {...rest}
     >
       <Text

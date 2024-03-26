@@ -20,8 +20,10 @@ export type IRepository = {
 interface IRepositoriesContextProps {
   repositories: IRepository[];
   addFavoriteRepository: (repository: IRepository) => Promise<void>;
+  removeFavoriteRepository(repository: IRepository): Promise<void>;
   favorites: IRepository[];
   handleOpenModal(): void;
+  IsFavorite(id: number): boolean;
 }
 
 interface IRepositoriesProviderProps {
@@ -55,6 +57,23 @@ function RepositoriesProvider({ children }: IRepositoriesProviderProps) {
 
         setRepos(prev => prev.filter(item => item.id !== repository.id));
       }
+    } catch (error) {
+      alert(error);
+    }
+  }
+
+  async function removeFavoriteRepository(repository: IRepository) {
+    try {
+      const existingFavorites = await getItem();
+
+      const previousRepository = existingFavorites ? JSON.parse(existingFavorites) : [];
+
+      const repositoryAlreadyExists = previousRepository.filter((item: IRepository) => item.id !== repository.id);
+
+      setFavorites(repositoryAlreadyExists);
+
+      await setItem(JSON.stringify(repositoryAlreadyExists));
+
     } catch (error) {
       alert(error);
     }
@@ -96,6 +115,12 @@ function RepositoriesProvider({ children }: IRepositoriesProviderProps) {
     setShowModal(true);
   }
 
+  function IsFavorite(id: number) {
+    const isFavorite = favorites.find(item => item.id === id);
+
+    return !!isFavorite;
+  }
+
   useEffect(() => {
     (async () => {
       await getFavorites();
@@ -109,7 +134,9 @@ function RepositoriesProvider({ children }: IRepositoriesProviderProps) {
         repositories,
         addFavoriteRepository,
         favorites,
-        handleOpenModal
+        handleOpenModal,
+        IsFavorite,
+        removeFavoriteRepository
       }}
     >
       {children}
