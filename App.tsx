@@ -4,22 +4,24 @@ import { StyleSheet, Text, View } from 'react-native';
 import { ThemeProvider } from 'styled-components/native';
 import theme from './src/theme';
 import { useFonts, Inter_400Regular, Inter_500Medium } from '@expo-google-fonts/inter';
-import { Roboto_400Regular, Roboto_700Bold } from '@expo-google-fonts/roboto';
-import * as SplashScreen from 'expo-splash-screen';
+import { Roboto_400Regular, Roboto_500Medium } from '@expo-google-fonts/roboto';
 
-SplashScreen.preventAutoHideAsync();
+import * as ExpoSplashScreen from 'expo-splash-screen';
+import { SplashScreen } from '@screens/SplashScreen';
+
+ExpoSplashScreen.preventAutoHideAsync();
 
 export default function App() {
   const [fontsLoaded, fontError] = useFonts({
     Inter_400Regular,
     Inter_500Medium,
     Roboto_400Regular,
-    Roboto_700Bold
+    Roboto_500Medium
   });
 
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded || fontError) {
-      await SplashScreen.hideAsync();
+      await ExpoSplashScreen.hideAsync();
     }
   }, [fontsLoaded, fontError]);
 
@@ -30,8 +32,7 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <View style={styles.container} onLayout={onLayoutRootView}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <StatusBar style="auto" />
+        <SplashScreen />
       </View>
     </ThemeProvider>
   );
@@ -40,8 +41,5 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
