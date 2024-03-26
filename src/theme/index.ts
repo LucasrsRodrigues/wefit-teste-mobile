@@ -9,12 +9,12 @@ export default {
   },
   fonts: {
     primary: {
-      regular: "",
-      bold: ""
+      regular: "Inter_400Regular",
+      bold: "Inter_500Medium"
     },
     secondary: {
-      regular: "",
-      medium: ""
+      regular: "Roboto_400Regular",
+      medium: "Roboto_500Medium"
     }
   },
 }
