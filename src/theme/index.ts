@@ -5,12 +5,13 @@ export default {
     primary: "#FFD02C",
     primary_light: "#FAF3DC",
     heading: "#070707",
-    paragraph: "#9A9A9A"
+    paragraph: "#9A9A9A",
+    line: "#DADADA"
   },
   fonts: {
     primary: {
       regular: "Inter_400Regular",
-      bold: "Inter_500Medium"
+      bold: "Inter_700Bold"
     },
     secondary: {
       regular: "Roboto_400Regular",

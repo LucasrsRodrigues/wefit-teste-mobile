@@ -6,8 +6,15 @@ const { Navigator, Screen } = createBottomTabNavigator();
 export function TabRoutes() {
   return (
     <Navigator>
-      <Screen name="HomePage" component={HomePage} />
-      <Screen name="Favorites" component={HomePage} />
+      <Screen
+        name="HomePage"
+        component={HomePage}
+      />
+
+      <Screen
+        name="Favorites"
+        component={HomePage}
+      />
     </Navigator>
   )
 }

@@ -3,7 +3,7 @@ import React, { useCallback } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { ThemeProvider } from 'styled-components/native';
 import theme from './src/theme';
-import { useFonts, Inter_400Regular, Inter_500Medium } from '@expo-google-fonts/inter';
+import { useFonts, Inter_400Regular, Inter_500Medium, Inter_700Bold } from '@expo-google-fonts/inter';
 import { Roboto_400Regular, Roboto_500Medium } from '@expo-google-fonts/roboto';
 
 import * as ExpoSplashScreen from 'expo-splash-screen';
@@ -18,7 +18,8 @@ export default function App() {
     Inter_400Regular,
     Inter_500Medium,
     Roboto_400Regular,
-    Roboto_500Medium
+    Roboto_500Medium,
+    Inter_700Bold
   });
 
   const onLayoutRootView = useCallback(async () => {
