@@ -8,6 +8,8 @@ import { Roboto_400Regular, Roboto_500Medium } from '@expo-google-fonts/roboto';
 
 import * as ExpoSplashScreen from 'expo-splash-screen';
 import { SplashScreen } from '@screens/SplashScreen';
+import { StackRouter } from '@react-navigation/native';
+import { Routes } from '@routes/index';
 
 ExpoSplashScreen.preventAutoHideAsync();
 
@@ -32,7 +34,7 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <View style={styles.container} onLayout={onLayoutRootView}>
-        <SplashScreen />
+        <Routes />
       </View>
     </ThemeProvider>
   );
