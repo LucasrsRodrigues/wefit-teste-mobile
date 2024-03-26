@@ -1,65 +1,49 @@
-import React from 'react';
-import { Text } from '@components/base/Typography/Text';
+import React, { useEffect, useState } from 'react';
 
 import * as S from './styles';
 import { useTheme } from 'styled-components/native';
-import { Entypo, Octicons } from '@expo/vector-icons';
+import RepoHttpService from '@infrastructure/service/RepoHttpService';
+import { FlatList } from 'react-native';
+import { GitCard } from '@components/GitCard';
+
+interface IReposProps {
+  id: number;
+  full_name: string;
+  description?: string;
+  owner: {
+    avatar_url: string;
+  }
+  stargazers_count: number;
+  language: string;
+  html_url: string;
+}
+
 export function HomePage() {
   const theme = useTheme();
+  const [repos, setRepos] = useState<Array<IReposProps>>([]);
+
+  useEffect(() => {
+    (async () => {
+      const response = await RepoHttpService.get("appswefit");
+
+      setRepos(response.data);
+    })();
+  }, []);
+
 
   return (
     <S.Container>
-      <S.GitCard>
-        <S.GitCardHeader>
-          <Text>
-            appswefit/create-react-app
-          </Text>
 
-          <S.GitCardHeaderImage
-            source={{ uri: "https://avatars.githubusercontent.com/u/58940345?v=4" }}
-          />
-        </S.GitCardHeader>
+      <FlatList
+        keyExtractor={item => String(item.id)}
+        data={repos}
+        renderItem={({ item }) => (
+          <GitCard item={item} />
+        )}
+        ItemSeparatorComponent={() => <S.Divider />}
+        showsVerticalScrollIndicator={false}
+      />
 
-        <S.GitCardBody>
-          <Text color={theme.colors.paragraph}>
-            Yarn Workspaces Monorepo support for Create-React-App / React-Scripts.
-          </Text>
-        </S.GitCardBody>
-
-        <S.GitCardFooter>
-          <S.FavouriteButton>
-            <Entypo name="star" size={20} color={theme.colors.primary} />
-
-            <Text color={theme.colors.primary} variant='bold'>
-              Favoritar
-            </Text>
-          </S.FavouriteButton>
-
-          <S.StarsCount>
-            <Entypo
-              name="star"
-              size={20}
-              color={theme.colors.primary}
-            />
-
-            <Text
-              color={theme.colors.paragraph}
-            >
-              0
-            </Text>
-          </S.StarsCount>
-
-          <S.PrimalLanguage>
-            <S.DotLanguage />
-
-            <Text
-              color={theme.colors.paragraph}
-            >
-              Typescript
-            </Text>
-          </S.PrimalLanguage>
-        </S.GitCardFooter>
-      </S.GitCard>
     </S.Container>
   );
 }

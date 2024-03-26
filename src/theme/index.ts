@@ -6,7 +6,9 @@ export default {
     primary_light: "#FAF3DC",
     heading: "#070707",
     paragraph: "#9A9A9A",
-    line: "#DADADA"
+    line: "#DADADA",
+    menuActive: "#1976D2",
+    menuInactive: "#00000060"
   },
   fonts: {
     primary: {
