@@ -13,6 +13,7 @@ Primeiro, clone o repositório para a sua máquina local:
 
 ```bash
 git clone https://github.com/LucasrsRodrigues/wefit-teste-mobile.git
+yarn ou npm install
 cd ios && pod install && cd ..
 npx expo start -c
 ```
