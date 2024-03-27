@@ -21,16 +21,11 @@ export function HomePage() {
 
       <PageHeader />
 
-      <FlatList
-        keyExtractor={item => String(item.id)}
-        data={repositories}
-        renderItem={({ item }) => (
-          <GitCard item={item} />
-        )}
-        ItemSeparatorComponent={() => <S.Divider />}
-        showsVerticalScrollIndicator={false}
-      />
-
+      <S.ListRepositoriesContainer>
+        {repositories.map((item, index) => (
+          <GitCard key={item.id} item={item} index={index} />
+        ))}
+      </S.ListRepositoriesContainer>
     </S.Container>
   );
 }

@@ -1,38 +1,36 @@
 import React from 'react';
 
-import * as S from './styles';
 import { Text } from '@components/base/Typography/Text';
 import { useTheme } from 'styled-components/native';
 import { Entypo } from '@expo/vector-icons';
 import { splitFullName } from '@utils/index';
-import { useRepositories } from '@hooks/repositories.hooks';
+import { IRepository, useRepositories } from '@hooks/repositories.hooks';
 import { useNavigation } from '@react-navigation/native';
 
-interface IReposProps {
-  id: number;
-  full_name: string;
-  description?: string;
-  owner: {
-    avatar_url: string;
-  }
-  stargazers_count: number;
-  language: string;
-  html_url: string;
-}
-
 interface IGitCardProps {
-  item: IReposProps;
+  item: IRepository;
   showFavorite?: boolean;
+  index: number;
 }
 
+import * as S from './styles';
+import { SlideInRight, SlideOutLeft, LinearTransition } from 'react-native-reanimated';
 
-export function GitCard({ item, showFavorite = true }: IGitCardProps) {
+const transaction = LinearTransition.springify().delay(200);
+
+
+export function GitCard({ item, showFavorite = true, index }: IGitCardProps) {
   const theme = useTheme();
   const { navigate } = useNavigation();
   const { addFavoriteRepository } = useRepositories();
 
   return (
-    <S.GitCard onPress={() => navigate("DetailsScreen", { item })}>
+    <S.GitCard
+      entering={SlideInRight.delay(index * 100)}
+      exiting={SlideOutLeft.delay(100)}
+      layout={transaction}
+      onPress={() => navigate("DetailsScreen", { item })}
+    >
       <S.GitCardHeader>
         <S.GitCardHeaderName>
           <Text>

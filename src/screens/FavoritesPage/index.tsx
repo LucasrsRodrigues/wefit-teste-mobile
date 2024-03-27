@@ -13,15 +13,14 @@ export function FavoritesPage() {
     <S.Container>
       <PageHeader />
 
-      <FlatList
-        keyExtractor={item => `${item.id}-favorite`}
-        data={favorites}
-        renderItem={({ item }) => (
-          <GitCard item={item} showFavorite={false} />
-        )}
-        ItemSeparatorComponent={() => <S.Divider />}
-        showsVerticalScrollIndicator={false}
-      />
+
+
+      <S.ListRepositoriesContainer>
+        {favorites.map((item, index) => (
+          <GitCard key={item.id} item={item} index={index} />
+        ))}
+      </S.ListRepositoriesContainer>
+
     </S.Container>
   );
 }

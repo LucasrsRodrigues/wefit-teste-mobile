@@ -1,7 +1,10 @@
+import { TouchableOpacity } from "react-native";
+import Animated from "react-native-reanimated";
 import styled from "styled-components/native";
 
+const TouchableOpacityAnimated = Animated.createAnimatedComponent(TouchableOpacity);
 
-export const GitCard = styled.TouchableOpacity`
+export const GitCard = styled(TouchableOpacityAnimated)`
   background: ${({ theme }) => theme.colors.card};
   padding: 12px 16px;
   border-radius: 4px;

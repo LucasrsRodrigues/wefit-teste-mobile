@@ -7,3 +7,9 @@ export const Container = styled.View`
 export const Divider = styled.View`
   height: 16px;
 `;
+
+export const ListRepositoriesContainer = styled.ScrollView.attrs({
+  contentContainerStyle: {
+    gap: 16
+  }
+})``;
