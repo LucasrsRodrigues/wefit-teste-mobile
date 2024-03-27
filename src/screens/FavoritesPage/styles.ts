@@ -11,5 +11,6 @@ export const Divider = styled.View`
 export const ListRepositoriesContainer = styled.ScrollView.attrs({
   contentContainerStyle: {
     gap: 16
-  }
+  },
+  showsVerticalScrollIndicator: false
 })``;

@@ -1,12 +1,9 @@
 import styled from "styled-components/native";
 import { StatusBar } from 'expo-status-bar';
 
-
-
 export const Container = styled.ImageBackground`
   flex:1;
 `;
-
 
 export const Divider = styled.View`
   height: 16px;
@@ -33,5 +30,6 @@ export const PageHeaderButton = styled.TouchableOpacity``;
 export const ListRepositoriesContainer = styled.ScrollView.attrs({
   contentContainerStyle: {
     gap: 16
-  }
+  },
+  showsVerticalScrollIndicator: false
 })``;

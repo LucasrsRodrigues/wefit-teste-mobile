@@ -1,13 +1,12 @@
 import React from 'react';
 
-import * as S from './styles';
-import { FlatList } from 'react-native';
 import { GitCard } from '@components/GitCard';
 import { StatusBar } from 'expo-status-bar';
 import { PageHeader } from '@components/PageHeader';
 import { useRepositories } from '@hooks/repositories.hooks';
 
 import logoPNG from "@assets/background-logo.png";
+import * as S from './styles';
 
 export function HomePage() {
   const { repositories } = useRepositories();

@@ -3,6 +3,7 @@ import { HomePage } from "@screens/HomePage";
 import { AntDesign, Entypo } from '@expo/vector-icons';
 import { useTheme } from "styled-components/native";
 import { FavoritesPage } from "@screens/FavoritesPage";
+import { Platform } from "react-native";
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -23,8 +24,8 @@ export function TabRoutes() {
       fontSize: 14,
     },
     tabBarStyle: {
-      padding: 8
-    }
+      padding: Platform.OS === "android" ? 0 : 8,
+    },
   }
 
   return (
